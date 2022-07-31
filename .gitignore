@@ -1,0 +1,6 @@
+assets/*
+config--*
+!config--env.sample.php
+/vendor/
+
+!.gitkeep

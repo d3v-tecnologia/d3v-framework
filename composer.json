@@ -1,0 +1,21 @@
+{
+    "name": "d3v-tecnologia/d3v-framework",
+    "description": "D3V PHP Framework",
+    "license": "Apache 2.0",
+    "autoload": {
+        "psr-4": {
+            "D3V\\": "src/",
+            "Progs\\": "progs/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jonas Sala",
+            "email": "jonas@d3v.com.br"
+        }
+    ],
+    "require": {
+        "php-di/php-di": "^6.4",
+        "doctrine/annotations": "^1.13"
+    }
+}
