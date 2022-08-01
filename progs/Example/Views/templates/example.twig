@@ -1,5 +1,17 @@
 {% extends '@d3v/templates/main.twig' %}
 
 {% block main %}
-<h2>Welcome to Example Program</h2>
+<h2>Lista dos 10 primeiros membros da SPRifle</h2>
+<ul>
+    {% for member in members %}
+    <li>{{ member["id"] }} - {{ member["name"] }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Lista dos 10 primeiros afiliados da Rede-E (pirâmide)</h2>
+<ul>
+    {% for afiliate in afiliates %}
+    <li>{{ afiliate["id"] }} - {{ afiliate["nome"] }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
