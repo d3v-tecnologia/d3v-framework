@@ -1,11 +1,10 @@
 <?php
 
-use DI\ContainerBuilder;
+use D3V\Core\App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$containerBuilder = new ContainerBuilder;
-$containerBuilder->useAnnotations(true);
-$container = $containerBuilder->build();
+$app = new App();
+$app->bootstrap();
 
-return $container;
+return $app;

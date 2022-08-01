@@ -8,6 +8,6 @@ class Controller extends CoreController
 {
     public function index()
     {
-        var_dump($this->config->need('key'));
+        echo $this->twig->render('@Example/templates/example.twig');
     }
 }

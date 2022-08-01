@@ -1,6 +1,6 @@
 assets/*
 config--*
-!config--env.sample.php
 /vendor/
-
+/cache/*
+!config--env.sample.php
 !.gitkeep

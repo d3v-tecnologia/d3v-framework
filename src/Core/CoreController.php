@@ -9,4 +9,10 @@ abstract class CoreController
      * @var \D3V\Core\Config
      */
     protected $config;
+
+    /**
+     * @Inject
+     * @var \Twig\Environment
+     */
+    protected $twig;
 }
