@@ -2,6 +2,7 @@
 
 namespace D3V\Core;
 
+use D3V\Exceptions\NotFoundException;
 use DI\ContainerBuilder;
 use DI\Container;
 use PDO;
@@ -70,5 +71,28 @@ class App
         if ($this->config->check('default_db_connection')) {
             $this->dbManager->connect($this->config->get('default_db_connection'));
         }
+    }
+
+    public function dispatch()
+    {
+        $callable = $this->callableFromPath($_SERVER['PATH_INFO'] ?? "");
+        list($class, $method) = explode("::", $callable);
+
+        if (!is_subclass_of($class, '\D3V\Core\CoreController') || !method_exists($class, $method)) {
+            throw new NotFoundException();
+        }
+        $this->container->call($callable);
+    }
+
+    private function callableFromPath($path)
+    {
+        $callableParts = array_map(function ($part) {
+            return str_replace(' ', '', ucwords(str_replace('-', ' ', $part)));
+        }, explode('/', $path));
+
+        $method = lcfirst(array_pop($callableParts));
+        $class = implode('\\', $callableParts);
+
+        return "$class::$method";
     }
 }

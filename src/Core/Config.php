@@ -2,6 +2,8 @@
 
 namespace D3V\Core;
 
+use D3V\Exceptions\ConfigNotFoundException;
+
 class Config
 {
     private $bag = [];
@@ -28,8 +30,4 @@ class Config
         }
         return $this->bag[$key];
     }
-}
-
-class ConfigNotFoundException extends \Exception
-{
 }
