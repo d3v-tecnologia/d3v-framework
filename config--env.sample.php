@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'homepage' => '\\Progs\\Homepage\\HomepageController::index',
     "twig" => [
         "debug" => true,
         "charset" => "utf-8",
@@ -27,4 +28,10 @@ return [
             'options' => [],
         ],
     ],
+    'auth' => [
+        'default' => [
+            'user_class' => '\\Progs\\UserManagement\\User',
+            'forbidden_redirect' => false,
+        ]
+    ]
 ];

@@ -10,9 +10,14 @@ class Controller extends CoreController
 {
     public function index(Members $members, Afiliates $afiliates)
     {
+        try {
+            $members = $members->all();
+            $afiliates = $afiliates->all();
+        } catch (\Exception $err) {
+        }
         echo $this->twig->render('@Example/templates/example.twig', [
-            'members' => $members->all(),
-            'afiliates' => $afiliates->all()
+            'members' => $members,
+            'afiliates' => $afiliates,
         ]);
     }
 }

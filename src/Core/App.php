@@ -14,6 +14,7 @@ class App
     private Config $config;
     public Container $container;
     private DBManager $dbManager;
+    private array $routes = [];
 
     public function __construct()
     {
@@ -23,6 +24,7 @@ class App
     public function bootstrap()
     {
         $this->setupDBManager();
+        $this->registerRoutes();
         $this->registerContainer();
     }
 
@@ -65,6 +67,16 @@ class App
         return new Environment($loader, $this->config->need('twig'));
     }
 
+    private function registerRoutes()
+    {
+        foreach (scandir(__DIR__ . '/../../progs') as $program) {
+            $path = __DIR__ . "/../../progs/$program/routes.php";
+            if (file_exists($path)) {
+                $this->routes = array_merge($this->routes, require($path));
+            }
+        }
+    }
+
     private function setupDBManager()
     {
         $this->dbManager = new DBManager($this->config->get('pdo', []));
@@ -75,7 +87,13 @@ class App
 
     public function dispatch()
     {
-        $callable = $this->callableFromPath($_SERVER['PATH_INFO'] ?? "");
+        $path = $_SERVER['PATH_INFO'] ?? "";
+        $callable = $this->callableFromPath($path);
+
+        if (empty($callable)) {
+            throw new NotFoundException();
+        }
+
         list($class, $method) = explode("::", $callable);
 
         if (!is_subclass_of($class, '\D3V\Core\CoreController') || !method_exists($class, $method)) {
@@ -86,13 +104,6 @@ class App
 
     private function callableFromPath($path)
     {
-        $callableParts = array_map(function ($part) {
-            return str_replace(' ', '', ucwords(str_replace('-', ' ', $part)));
-        }, explode('/', $path));
-
-        $method = lcfirst(array_pop($callableParts));
-        $class = implode('\\', $callableParts);
-
-        return "$class::$method";
+        return !empty($path) ? $this->routes[$path] ?? "" : $this->config->get("homepage");
     }
 }
