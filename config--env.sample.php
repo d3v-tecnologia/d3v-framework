@@ -31,7 +31,7 @@ return [
     'auth' => [
         'default' => [
             'user_class' => '\\Progs\\UserManagement\\User',
-            'forbidden_redirect' => false,
+            'unauthorized_redirect' => '/login',
         ]
     ]
 ];

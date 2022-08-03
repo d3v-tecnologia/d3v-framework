@@ -6,7 +6,7 @@ use D3V\Core\Request;
 
 interface Authenticatable
 {
-    public static function loadFromRequest(Request $request): Authenticatable;
+    public static function loadFromRequest(): Authenticatable | null;
 
     public function getUsername(): string;
 

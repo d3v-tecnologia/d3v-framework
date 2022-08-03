@@ -47,7 +47,7 @@ class App
             },
             PDO::class => function () {
                 return $this->dbManager->get($this->config->need('default_db_connection'));
-            },
+            }
         ]);
         $this->container = $containerBuilder->build();
     }
