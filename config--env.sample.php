@@ -33,5 +33,9 @@ return [
             'user_class' => '\\Progs\\UserManagement\\User',
             'unauthorized_redirect' => '/login',
         ]
-    ]
+    ],
+    'i18n' => [
+        'default_language' => 'pt_BR',
+        'translation_manager_class' => '\\Progs\\TranslationManagement\\TranslationManager',
+    ],
 ];

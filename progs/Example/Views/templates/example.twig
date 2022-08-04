@@ -8,7 +8,7 @@
     {% endfor %}
 </ul>
 
-<h2>Lista dos 10 primeiros afiliados da Rede-E (pirâmide)</h2>
+<h2>Lista dos 10 primeiros afiliados da Rede-E ({{ __("pirâmide") }})</h2>
 <ul>
     {% for afiliate in afiliates %}
     <li>{{ afiliate["id"] }} - {{ afiliate["nome"] }}</li>
