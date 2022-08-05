@@ -7,6 +7,11 @@ use D3V\Interfaces\TranslationManager;
 use DI\ContainerBuilder;
 use DI\Container;
 use PDO;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
+use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
@@ -17,6 +22,7 @@ class App
     public Container $container;
     private DBManager $dbManager;
     private array $routes = [];
+    private TagAwareCacheInterface $cache;
 
     public function __construct()
     {
@@ -26,9 +32,43 @@ class App
     public function bootstrap()
     {
         $this->setupDBManager();
+        $this->setupCache();
         $this->registerRoutes();
         $this->registerContainer();
         $this->setupTranslations();
+    }
+
+    private function setupCache()
+    {
+        $cfg = $this->config->get("cache", ['adapter' => 'array']);
+
+        switch ($cfg['adapter']) {
+            case 'array':
+                $this->cache = $this->setupArrayCacheAdapter($cfg);
+                break;
+            case 'file':
+                $this->cache = $this->setupFilesystemCacheAdapter($cfg);
+                break;
+        }
+    }
+
+    private function setupArrayCacheAdapter(array $cfg): TagAwareCacheInterface
+    {
+        return new TagAwareAdapter(new ArrayAdapter(
+            $cfg['default_lifetime'] ?? 0,
+            $cfg['store_serialized'] ?? true,
+            $cfg['max_lifetime'] ?? 0,
+            $cfg['max_itens'] ?? 0
+        ));
+    }
+
+    private function setupFilesystemCacheAdapter(array $cfg): TagAwareCacheInterface
+    {
+        return new FilesystemTagAwareAdapter(
+            $cfg['namespace'] ?? '',
+            $cfg['default_lifetime'] ?? 0,
+            $cfg['directory'] ?? __DIR__ . '/../../cache'
+        );
     }
 
     private function registerContainer()
@@ -50,6 +90,9 @@ class App
             },
             PDO::class => function () {
                 return $this->dbManager->get($this->config->need('default_db_connection'));
+            },
+            CacheInterface::class => function () {
+                return $this->cache;
             }
         ]);
         $this->container = $containerBuilder->build();
@@ -68,10 +111,10 @@ class App
         }
 
         $twigEnv = new Environment($loader, $this->config->need('twig'));
-        $twigEnv->addFunction(new TwigFunction('__', function ($term, $namespace = "") {
+        $twigEnv->addFunction(new TwigFunction('__', function ($term, $namespace = "common") {
             return T::t($term, $namespace);
         }));
-        $twigEnv->addFunction(new TwigFunction('n__', function ($singular, $plural, $n, $namespace = "") {
+        $twigEnv->addFunction(new TwigFunction('n__', function ($singular, $plural, $n, $namespace = "common") {
             return T::p($singular, $plural, $n, $namespace);
         }));
 
@@ -100,7 +143,7 @@ class App
     {
         $class = $this->config->get('i18n', [])['translation_manager_class'] ?? null;
         if ($class) {
-            T::setupTranslationManager($this->container->get($class));
+            T::setupTranslationManager($this->container->get($class), $this->cache);
         }
     }
 

@@ -11,6 +11,9 @@ return [
         "autoescape" => false,
         "optimizations" => -1,
     ],
+    'cache' => [
+        'adapter' => 'array'
+    ],
     'default_db_connection' => 'connection1',
     'pdo' => [
         'connection1' => [

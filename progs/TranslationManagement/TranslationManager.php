@@ -28,7 +28,7 @@ class TranslationManager implements ITranslationManager
         return $lang;
     }
 
-    public function getTerm(string $term, string $namespace = ""): string
+    public function getTerm(string $term, string $namespace = "common"): string
     {
         if ($term == 'pirâmide') {
             return 'falcatrua';
@@ -36,7 +36,7 @@ class TranslationManager implements ITranslationManager
         return $term;
     }
 
-    public function getPlural(string $term, string $plural, float $n, string $namespace = ""): string
+    public function getPlural(string $term, string $plural, float $n, string $namespace = "common"): string
     {
         return $n > 1 ? $plural : $term;
     }
