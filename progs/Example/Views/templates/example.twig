@@ -1,6 +1,8 @@
 {% extends '@d3v/templates/main.twig' %}
 
 {% block main %}
+{{ include('@d3v/components/test-core.twig', {'name': 'Jonas'}) }}
+{{ component('@Example/test-example', {'name': 'Jonas', 'lastname': 'Sala'})}}
 <img src="/assets/img/Example/Icon-App-1024x1024@1x.png">
 <h2>Lista dos 10 primeiros membros da SPRifle</h2>
 <ul>
