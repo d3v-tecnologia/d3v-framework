@@ -7,10 +7,13 @@
     <title>D3V Framework</title>
 </head>
 <body>
-    <h1>D3V Framework</h1>
+    <h1 class="text-3xl font-bold underline">D3V Framework</h1>
     <div id="main">
         {% block main %}
         {% endblock %}
     </div>
+    <script src="{{js('core')}}"></script>
+    {% block js %}
+    {% endblock %}
 </body>
 </html>

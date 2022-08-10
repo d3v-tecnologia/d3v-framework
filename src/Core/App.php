@@ -11,6 +11,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -116,6 +117,17 @@ class App
         }));
         $twigEnv->addFunction(new TwigFunction('n__', function ($singular, $plural, $n, $namespace = "common") {
             return T::p($singular, $plural, $n, $namespace);
+        }));
+        $twigEnv->addFunction(new TwigFunction('js', function ($name) {
+            return $this->cache->get("assets.js.$name", function (ItemInterface $item) use ($name) {
+                $item->tag('asset');
+                foreach (scandir(__DIR__ . '/../../public/assets/js') as $js) {
+                    if (strpos($js, "$name.") === 0) {
+                        return "/assets/js/$js";
+                    }
+                }
+                return "";
+            });
         }));
 
         return $twigEnv;
