@@ -129,9 +129,8 @@ class App
                 return "";
             });
         }));
-        $twigEnv->addFunction(new TwigFunction('component', function ($name, $parameters = []) use ($twigEnv) {
-            list($namespace, $component) = explode('/', $name);
-            return $twigEnv->render("$namespace/components/$component.twig", $parameters);
+        $twigEnv->addFunction(new TwigFunction('config', function () {
+            return $this->config;
         }));
 
         return $twigEnv;
