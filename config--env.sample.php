@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'app_logo' => '/assets/img/core/logo.png',
+    'app_name' => 'D3V Framework',
     'homepage' => '\\Progs\\Homepage\\HomepageController::index',
     "twig" => [
         "debug" => true,

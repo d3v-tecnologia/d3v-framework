@@ -1,0 +1,48 @@
+{% extends "@d3v/templates/main.twig" %}
+
+{% block main %}
+    <div class="h-full flex flex-col">
+        <div class="w-full h-max">
+            <div class="flex bg-cyan-600 text-white justify-between">
+                <div class="flex items-center px-2 py-2">
+                    <div class="h-12">
+                        <img class="h-full" alt="logo" src="{{ config().get('app_logo', '/assets/core/img/logo.png') }}">
+                    </div>
+                    <div class="pl-2 font-medium text-xl">
+                        {{ config().get('app_name', 'D3V Framework') }}
+                    </div>
+                </div>
+                <div class="mr-4 text-sm text-gray-200 h-max flex">
+                    <button class="px-3 py-2 border-r bg-gray-600 hover:bg-gray-700 border-gray-500 border-l-0 rounded rounded-t-none rounded-r-none">
+                        <i class="far fa-circle-question mr-1"></i> {{__('Ajuda')}}
+                    </button>
+                    <button class="px-3 py-2 text-base bg-gray-600 hover:bg-gray-700 border-r border-gray-500 border-l-0">
+                        <i class="far fa-bell"></i> 
+                        <div class="absolute -mt-2 ml-1 rounded-full bg-red-700 font-medium text-tiny w-5 h-5 flex justify-center items-center">44</div>
+                    </button>
+                    <button class="px-3 py-2 bg-gray-600 hover:bg-gray-700 rounded rounded-t-none rounded-l-none">
+                        <i class="fas fa-user mr-1"></i> Jonas
+                        <i class="fas fa-caret-down text-xs ml-1"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gray-600 text-gray-200 border-b-gray-700 border-b-4 py-1 px-2 text-xs">
+                <a href="#" class="hover:text-white">
+                    <i class="fas fa-home"></i>
+                </a> 
+                <i class="fas fa-chevron-right text-tiny mx-1"></i>
+                <a href="#" class="hover:text-white">
+                    Sistema Exemplo
+                </a> 
+                <i class="fas fa-chevron-right text-tiny mx-1"></i>
+                <span class="cursor-default">Programa exemplo</span>
+            </div>
+        </div>
+        <div class="w-full flex-1">
+            {% block page %}{% endblock %}
+        </div>
+        <div class="w-full self-end h-max">
+            <div>footer</div>
+        </div>
+    </div>
+{% endblock %}
