@@ -1,5 +1,7 @@
 <?php
 
+use D3V\Lib\Route;
+
 return [
-    '/progs/example' => '\\Progs\\Example\\Controller::index',
+    '/progs/example' => new Route('GET', [\Progs\Example\Controller::class, 'index']),
 ];

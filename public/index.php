@@ -2,4 +2,4 @@
 
 $app = require __DIR__ . '/../app/bootstrap.php';
 
-$app->dispatch();
+$app->run();

@@ -3,7 +3,7 @@
 return [
     'app_logo' => '/assets/img/core/logo.png',
     'app_name' => 'D3V Framework',
-    'homepage' => '\\Progs\\Homepage\\HomepageController::index',
+    'homepage' => '/',
     "twig" => [
         "debug" => true,
         "charset" => "utf-8",

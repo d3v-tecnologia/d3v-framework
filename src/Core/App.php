@@ -162,25 +162,13 @@ class App
         }
     }
 
-    public function dispatch()
+    public function run()
     {
-        $path = $_SERVER['PATH_INFO'] ?? "";
-        $callable = $this->callableFromPath($path);
-
-        if (empty($callable)) {
+        $path = $_SERVER['PATH_INFO'] ?? $this->config->get("homepage");
+        if (!isset($this->routes[$path])) {
             throw new NotFoundException();
         }
-
-        list($class, $method) = explode("::", $callable);
-
-        if (!is_subclass_of($class, '\D3V\Core\CoreController') || !method_exists($class, $method)) {
-            throw new NotFoundException();
-        }
-        $this->container->call($callable);
-    }
-
-    private function callableFromPath($path)
-    {
-        return !empty($path) ? $this->routes[$path] ?? "" : $this->config->get("homepage");
+        $route = $this->routes[$path];
+        $route->dispatch($this);
     }
 }
