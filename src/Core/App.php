@@ -3,7 +3,6 @@
 namespace D3V\Core;
 
 use D3V\Exceptions\NotFoundException;
-use D3V\Interfaces\TranslationManager;
 use DI\ContainerBuilder;
 use DI\Container;
 use PDO;
@@ -16,6 +15,7 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
+use Twig\Extra\String\StringExtension;
 
 class App
 {
@@ -112,6 +112,7 @@ class App
         }
 
         $twigEnv = new Environment($loader, $this->config->need('twig'));
+        $twigEnv->addExtension(new StringExtension());
         $twigEnv->addFunction(new TwigFunction('__', function ($term, $namespace = "common") {
             return T::t($term, $namespace);
         }));
@@ -139,9 +140,10 @@ class App
     private function registerRoutes()
     {
         foreach (scandir(__DIR__ . '/../../progs') as $program) {
-            $path = __DIR__ . "/../../progs/$program/routes.php";
+            $path = __DIR__ . "/../../progs/$program/definitions.php";
             if (file_exists($path)) {
-                $this->routes = array_merge($this->routes, require($path));
+                $defs = require($path);
+                $this->routes = array_merge($this->routes, $defs['routes'] ?? []);
             }
         }
     }
@@ -165,10 +167,13 @@ class App
     public function run()
     {
         $path = $_SERVER['PATH_INFO'] ?? $this->config->get("homepage");
-        if (!isset($this->routes[$path])) {
+        $routes = array_filter($this->routes, function ($route) use ($path) {
+            return $route->getPath() == $path;
+        });
+        if (empty($routes)) {
             throw new NotFoundException();
         }
-        $route = $this->routes[$path];
-        $route->dispatch($this);
+        $route = array_pop($routes);
+        echo $route->dispatch($this);
     }
 }

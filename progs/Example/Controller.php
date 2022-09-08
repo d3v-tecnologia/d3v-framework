@@ -15,9 +15,9 @@ class Controller extends CoreController
             $afiliates = $afiliates->all();
         } catch (\Exception $err) {
         }
-        echo $this->twig->render('@Example/templates/example.twig', [
+        return $this->html($this->twig->render('@Example/templates/example.twig', [
             'members' => $members,
             'afiliates' => $afiliates,
-        ]);
+        ]));
     }
 }

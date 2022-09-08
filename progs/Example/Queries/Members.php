@@ -8,7 +8,7 @@ class Members extends CoreQueries
 {
     public function all()
     {
-        $stmt = $this->default->prepare("SELECT * FROM members LIMIT 0, 10");
+        $stmt = $this->default->prepare("SELECT * FROM members LIMIT 0, 3");
         $stmt->execute();
         return $stmt;
     }

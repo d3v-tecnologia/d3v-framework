@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-    font-family: 'Montserrat', sans-serif;
+@layer base {
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+}
+
+.btn-primary {
+    @apply text-white bg-cyan-600 hover:bg-cyan-700;
+}
+
+.btn-flat {
+    @apply bg-white text-slate-800 hover:bg-gray-200;
+}
+
+.btn-secondary {
+    @apply text-white bg-gray-600 hover:bg-gray-700;
+}
+
+.btn-error {
+    @apply text-white bg-red-600 hover:bg-red-700;
+}
+
+.btn-md {
+    @apply p-2 text-sm;
+}
+
+.btn-lg {
+    @apply px-4 py-2;
+}
+
+.btn-sm {
+    @apply py-1 px-2 text-xs;
 }

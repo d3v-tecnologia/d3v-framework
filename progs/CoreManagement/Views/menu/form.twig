@@ -1,0 +1,23 @@
+{% extends '@d3v/templates/application.twig' %}
+{% from "@d3v/macros/buttons.twig" import back_button %}
+
+{% set title = item ? "Item de menu: #{item['name']}" : "Novo item de menu" %}
+
+{% block head_title %}{{title}}{% endblock %}
+{% block page_title %}
+    {{ back_button() }}
+    {{title}}
+{% endblock %}
+{% block page_content %}
+    <form>
+        {{include("@d3v/components/input.twig", {label: "Nome", name: "nome", value: "Jonas", hint: "coisa louca demais", input_opts: {attrs: {disabled: "disabled"}}})}}
+        {% embed "@d3v/components/input.twig" with {label: "Senha", name: "senha", input_opts: {type: "password"} } %}
+            {% block prefix %}
+                <i class="fas fa-lock text-slate-700 mr-2"></i>
+            {% endblock %}
+            {% block suffix %}
+                <i class="fas fa-key text-slate-700 ml-2"></i>
+            {% endblock %}
+        {% endembed %}
+    </form>
+{% endblock %}

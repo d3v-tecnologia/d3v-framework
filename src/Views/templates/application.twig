@@ -13,25 +13,25 @@
                     </div>
                 </div>
                 <div class="mr-4 text-sm text-gray-200 h-max flex">
-                    <button class="px-3 py-2 border-r bg-gray-600 hover:bg-gray-700 border-gray-500 border-l-0 rounded rounded-t-none rounded-r-none">
+                    <button class="px-3 py-2 border-r bg-gray-600 hover:bg-gray-700 border-gray-500 border-l-0 rounded rounded-t-none rounded-r-none focus:outline-none">
                         <i class="far fa-circle-question mr-1"></i> {{__('Ajuda')}}
                     </button>
-                    <button class="px-3 py-2 text-base bg-gray-600 hover:bg-gray-700 border-r border-gray-500 border-l-0">
+                    <button class="px-3 py-2 text-base bg-gray-600 hover:bg-gray-700 border-r border-gray-500 border-l-0 focus:outline-none">
                         <i class="far fa-bell"></i> 
                         <div class="absolute -mt-2 ml-1 rounded-full bg-red-700 font-medium text-tiny w-5 h-5 flex justify-center items-center">44</div>
                     </button>
-                    <button class="px-3 py-2 bg-gray-600 hover:bg-gray-700 rounded rounded-t-none rounded-l-none">
+                    <button class="px-3 py-2 bg-gray-600 hover:bg-gray-700 rounded rounded-t-none rounded-l-none focus:outline-none">
                         <i class="fas fa-user mr-1"></i> Jonas
                         <i class="fas fa-caret-down text-xs ml-1"></i>
                     </button>
                 </div>
             </div>
             <div class="bg-gray-600 text-gray-200 border-b-gray-700 border-b-4 py-1 px-2 text-xs">
-                <a href="#" class="hover:text-white">
+                <a href="#" class="hover:text-white focus:outline-none">
                     <i class="fas fa-home"></i>
                 </a> 
                 <i class="fas fa-chevron-right text-tiny mx-1"></i>
-                <a href="#" class="hover:text-white">
+                <a href="#" class="hover:text-white focus:outline-none">
                     Sistema Exemplo
                 </a> 
                 <i class="fas fa-chevron-right text-tiny mx-1"></i>
@@ -39,10 +39,18 @@
             </div>
         </div>
         <div class="w-full flex-1">
-            {% block page %}{% endblock %}
+            <div class="p-2">
+                <div class="flex items-center">
+                    <h2 class="font-medium text-2xl text-slate-900 flex items-center">{% block page_title %}{% endblock %}</h2>
+                    <div class="ml-3">{% block page_actions %}{% endblock %}</div>
+                </div>
+                <div class="mt-2">
+                    {% block page_content %}{% endblock %}
+                </div>
+            </div>
         </div>
-        <div class="w-full self-end h-max">
-            <div>footer</div>
+        <div class="bg-gray-700 text-gray-200 border-t-gray-800 border-t-3 py-1 px-2 text-tiny">
+            <div>&copy; Copyright {{ "now" | date ("Y") }}, D3V Tecnologia da Informação LTDA.</div>
         </div>
     </div>
 {% endblock %}

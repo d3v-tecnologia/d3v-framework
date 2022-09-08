@@ -1,0 +1,14 @@
+{% import "@d3v/macros/inputs.twig" as inputs %}
+
+{% set id = input_opts.id ?? name | slug %}
+<div class="mb-2">
+    {% block label %}{% if label != "" %}{{inputs.label(label, id)}}{% endif %}{% endblock %}
+    <div class="flex items-center">
+        {% block prefix %}{% endblock %}
+        {% block input %}{{inputs.input(name, value, input_opts)}}{% endblock %}
+        {% block suffix %}{% endblock %}
+    </div>
+    {% block hint %}
+    {% if hint != "" %}<div class="text-xs text-slate-500">{{hint}}</div>{% endif %}
+    {% endblock %}
+</div>

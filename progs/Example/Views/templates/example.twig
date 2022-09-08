@@ -1,8 +1,7 @@
-{% extends '@d3v/templates/main.twig' %}
+{% extends '@d3v/templates/application.twig' %}
 
-{% block main %}
+{% block page %}
 {{ include('@Example/components/test-example.twig', {'name': 'Jonas', 'lastname': 'Sala'}) }}
-<img src="/assets/img/Example/Icon-App-1024x1024@1x.png">
 <h2>Lista dos 10 primeiros membros da SPRifle</h2>
 <ul>
     {% for member in members %}
@@ -19,5 +18,4 @@
 {% endblock %}
 
 {% block js %}
-<script src="{{js('Example')}}"></script>
 {% endblock %}

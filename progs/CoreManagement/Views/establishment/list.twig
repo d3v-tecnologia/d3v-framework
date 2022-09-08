@@ -1,0 +1,7 @@
+{% extends '@d3v/templates/list.twig' %}
+
+{% block head_title %}Estabelecimentos fiscais{% endblock %}
+{% block page_title %}Estabelecimentos fiscais{% endblock %}
+{% block page_actions %}
+    {{ include('@d3v/components/button.twig', {tag: "a", type: "primary", text: "Novo", icon: "fas fa-plus", href: "/core/establishments/form"}) }}
+{% endblock %}

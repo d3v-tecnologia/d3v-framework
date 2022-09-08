@@ -24,14 +24,8 @@ abstract class CoreController
      */
     protected $auth;
 
-    protected function requiresAuth($provider)
+    public function html($content)
     {
-        $user = $this->auth->get($provider);
-
-        if (!$user) {
-            return $this->auth->unauthorized($provider);
-        }
-
-        return $user;
+        return $content;
     }
 }

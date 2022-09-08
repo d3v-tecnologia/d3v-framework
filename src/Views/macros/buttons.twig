@@ -1,0 +1,22 @@
+{% macro button(action, opts = {}) %}
+    {% set tag = opts.tag ?? "button" %}
+    {% set type = opts.type ?? "primary" %}
+    {% set size = opts.size ?? "md" %}
+    {% set classes = ["btn-"~type, "btn-"~size, "rounded-md", "font-semibold", "focus:outline-none"]|merge(opts.classes ?? [])|join(' ') %}
+    {% set text = opts.text ?? "" %}
+    {% set icon = opts.icon ?? "" %}
+    
+    <{{ tag }} class="{{classes}}"
+    {% if tag=="button" %}onclick="{{action}}"{% endif %}
+    {% if tag=="a" %}href="{{action}}"{% endif %}    
+    {% for attr, value in opts.attrs ?? {} %}
+        {{attr}}="{{value}}"
+    {% endfor %}
+    >
+    {% if icon %}<i class="{{icon}} {% if text != "" %} mr-2 {% endif %}"></i>{% endif %}{{text|upper}}
+    </{{tag}}>
+{% endmacro %}
+
+{% macro back_button(steps = -1, opts = {}) %}
+    {{ _self.button("window.history.go(#{steps})", opts|merge({icon: "fas fa-chevron-left", type: "flat", size: "sm", classes: ["mr-1"]})) }}
+{% endmacro %}

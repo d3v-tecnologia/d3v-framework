@@ -1,0 +1,11 @@
+{% extends '@d3v/templates/list.twig' %}
+
+{% block head_title %}Estabelecimentos fiscais{% endblock %}
+{% block page_title %}
+    {% if establishment %}
+        Estabelecimento fiscal: {{establishment['name']}}
+    {% else %}
+        Novo Estabelecimento fiscal
+    {% endif %}
+    
+{% endblock %}

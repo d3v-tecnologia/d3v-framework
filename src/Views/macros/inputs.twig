@@ -1,0 +1,18 @@
+{% macro label(text, for) %}
+    <label for="{{for}}" class="text-sm font-semibold block mb-1">{{text}}</label>
+{% endmacro %}
+
+{% macro input(name, value = "", opts = {}) %}
+    {% set id = opts.id ?? name|slug %}
+    {% set classes = ["w-full", "p-1"]|merge(opts.classes ?? [])|join(" ") %}
+    <input 
+        type="{{ opts.type ?? 'text' }}"
+        id="{{id}}" 
+        name="{{name}}" 
+        value="{{value|e}}" 
+        class="{{classes}} text-sm border border-slate-300 shadow-sm rounded-sm bg-white focus:outline-none focus:ring-1 focus:border-sky-500 focus:ring-sky-500 invalid:border-rose-500 focus:invalid:invalid:border-rose-500 focus:invalid:ring-rose-500 invalid:text-rose-600 disabled:bg-slate-50 disabled:text-slate-500"
+        {% for attr, value in opts.attrs ?? {} %}
+            {% if attr != "id" %}{{attr}}="{{value}}"{% endif %}
+        {% endfor %} />
+{% endmacro %}
+

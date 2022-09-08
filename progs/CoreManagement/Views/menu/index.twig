@@ -1,0 +1,12 @@
+{% extends '@d3v/templates/list.twig' %}
+{% from "@d3v/macros/buttons.twig" import button %}
+
+{% block head_title %}Gerenciamento de menu{% endblock %}
+{% block page_title %}Gerenciamento de menu{% endblock %}
+{% block page_actions %}
+    {{button("/core/menu/form", {
+        tag: "a",
+        text: "Novo item raiz",
+        icon: "fas fa-plus"
+    })}}
+{% endblock %}
